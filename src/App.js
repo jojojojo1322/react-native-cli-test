@@ -5,7 +5,7 @@ import TopBar from './components/TopBar';
 import ListView from './components/ListView';
 import DetailView from './components/DetailView';
 import Loading from './components/Loading';
-import Initial from './components/Initial';
+import Initial3 from './components/Initial3';
 import Login from './components/Login';
 
 // const App = () => {
@@ -31,7 +31,7 @@ class App extends Component {
             {/* <TopBar /> */}
             {/* <Route exact path="/" component={ListView} />
               <Route path="/detail/:id" component={DetailView} /> */}
-            <Route exact path="/" component={Initial} />
+            <Route exact path="/" component={Initial3} />
             <Route path="/login" component={Login} />
           </ScrollView>
         </NativeRouter>
