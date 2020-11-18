@@ -49,7 +49,7 @@ class Initial2 extends Component {
   render() {
     const windowWidth = this.state.dimensions.window.width;
     return (
-      <View style={styles.container}>
+      <View style={styles.container2}>
         <SafeAreaView style={styles.container}>
         <View style={styles.scrollContainer}>
           <ScrollView
@@ -71,25 +71,19 @@ class Initial2 extends Component {
             {images.map((image, imageIndex) => {
               return (
                 <View
-                  style={{
-                    width: windowWidth,
-                    height: 250
-                  }}
+                  style={styles.imgBox, {width: windowWidth}}
                   key={imageIndex}
                 >
                   <Image 
                     source={imageIndex == 0 ? (require('../imgs/icon_intro_01.png')) : imageIndex == 1 ? (require('../imgs/icon_intro_02.png')) : (require('../imgs/icon_intro_03.png'))}
-                    style={styles.card}
+                    style={styles.Image}
                   />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.TextTitle}>
+                  <Text style={styles.TextTitle}>
                     {imageIndex == 0 ? 'RESEARCH' : imageIndex == 1 ? 'WALLET' : 'REWARD'}
-                    </Text>
-                    <Text style={styles.infoText}>
+                  </Text>
+                  <Text style={styles.infoText}>
                     {imageIndex == 0 ? '나의 생각이 전세계에\n반영되는 설문조사' : imageIndex == 1 ? '쉽고 안전하고 빠른 지갑 송금\nReal Research에서 가능합니다.' : 'Real Research 만의\n놀라운 리워드 지금 시작하세요!'}
-                    </Text>
-                  </View>
-                  
+                  </Text>
                 </View>
               );
             })}
@@ -116,15 +110,15 @@ class Initial2 extends Component {
         </View>
       </SafeAreaView>
     
-        <View>
-        <Button title="SIGN UP"></Button>
-        <TouchableOpacity activeOpacity={0.75}>
-          {/* <Link to={`/login`}> */}
-          <Button title="LOGIN" onPress={this.handleLoginRoute} />
-          {/* <Text>Login</Text> */}
-          {/* </Link> */}
-        </TouchableOpacity>
-      </View>
+        <View style={styles.buttonBox}>
+            <TouchableOpacity style={styles.button} activeOpacity={0.75}>
+              <Text style={styles.buttonText}>SIGN UP</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.buttonLogin} activeOpacity={0.75} onPress={this.handleLoginRoute}>
+              <Text style={styles.buttonText}>LOGIN</Text>
+            </TouchableOpacity>
+        </View>
     </View>
     );
   }
@@ -132,93 +126,51 @@ class Initial2 extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     flex: 1,
-    flexDirection: 'column', // 혹은 'column'
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 40
   },
-  TextTitle: {
-    marginTop: 40,
-    textAlign: 'center',
-    fontSize: 40,
-    fontWeight: 'bold',
-  },
-  TextBody: {
-     marginTop: 30,
-    textAlign: 'center',
-    fontSize: 17,
-    lineHeight: 25,
-    fontWeight: 'normal',
-    color: '#222'
-  },
-  imgViewBox:{
-      flex: 3,
-      flexWrap: 'nowrap',
-      flexDirection: 'row'
+  container2: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 40
   },
   imgBox: {
     flex: 1,
-    alignItems: "center",
-    
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    alignItems: 'center'
   },
   Image: {
     resizeMode: 'contain',
     width: 160,
     height: 140,
-    marginTop: 100
-  },
-  greyCircle: {
-    resizeMode: 'contain',
-    // flexDirection: 'row',
-    // resizeMethod: 'resize',
-    height: 12,
-    width: 12,
-    margin: 7.5,
-    marginBottom: 70,
-    tintColor: '#e7e8e9',
-  },
-  blueCircle: {
-    resizeMode: 'contain',
-    // flexDirection: 'row',
-    // resizeMethod: 'resize',
-    height: 12,
-    width: 12,
-    margin: 7.5,
-    marginBottom: 70,
-    tintColor: '#1e4683',
+    alignSelf: 'center'
   },
   scrollContainer: {
-    height: 300,
+    height: 400,
     alignItems: "center",
     justifyContent: "center"
-  },
-  card: {
-    flex: 1,
-    marginVertical: 4,
-    marginHorizontal: 16,
-    borderRadius: 5,
-    overflow: "hidden",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  textContainer: {
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-    borderRadius: 5
   },
   TextTitle: {
     marginTop: 40,
     textAlign: 'center',
     fontSize: 40,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   infoText: {
+    marginTop: 20,
     textAlign: 'center',
     color: "black",
+    color: '#222',
     fontSize: 17,
     lineHeight: 25,
-    fontWeight: "bold"
+    fontWeight: 'normal'
   },
   normalDot: {
     height: 12,
@@ -231,7 +183,33 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center"
-  }
+  },
+  buttonBox: {
+    width: '100%',
+    alignItems: 'center'
+  },
+  button: {
+      width: '90%',
+      height: 56,
+      borderRadius: 30,
+      backgroundColor: '#164895',
+      color: '#FFF',
+      marginTop: 40
+  },
+  buttonLogin: {
+      width: '90%',
+      height: 56,
+      borderRadius: 30,
+      backgroundColor: '#0b95c9',
+      color: '#FFF',
+      marginTop: 10
+  },
+  buttonText: {
+      color: '#FFF',
+      textAlign: 'center',
+      fontSize: 17,
+      lineHeight: 56,
+  },
 });
 
 export default Initial2;
