@@ -32,13 +32,17 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <Button title="back" onPress={this.handleBack}></Button>
-        <Text>Real Research{'\n'}</Text>
-        <Text>Hello there,{'\n'}Login to your account</Text>
+        <Text style={styles.realresearch}>Real Research</Text>
+        <Text style={styles.textalign}>
+          Hello there,{'\n'}Login to your account
+        </Text>
         <TextInput
+          style={[styles.textinput, styles.firstTextInput]}
           placeholder="Email Address"
           value={this.state.ID}
           onChangeText={(text) => this.handleID(text)}></TextInput>
         <TextInput
+          style={styles.textinput}
           placeholder="Password"
           secureTextEntry={true}
           value={this.state.passWord}
@@ -51,10 +55,36 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     marginTop: 60,
+    justifyContent: 'center',
+    alignItems: 'center'
     //   flex: 1,
     //   flexDirection: 'row',
     //   flexWrap: 'wrap',
   },
+  realresearch: {
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: '500',
+  },
+  textalign: {
+    textAlign: 'center',
+    color: '#888',
+    lineHeight: 20,
+    fontSize: 15,
+    marginTop: 20,
+  },
+  textinput: {
+     width: '90%',
+     height: 56,
+     borderWidth: 1.5,
+     borderColor: '#164895',
+     borderRadius: 50,
+     paddingLeft: 31,
+     marginTop: 20
+  },
+  firstTextInput: {
+    marginTop: 50
+  }
   //   row: {
   //     alignItems: 'center',
   //     backgroundColor: 'white',
