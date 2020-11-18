@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-import {Link} from 'react-router-native';
 
 class Initial extends Component {
   state = {

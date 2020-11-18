@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {StyleSheet, ScrollView} from 'react-native';
-import {NativeRouter, Route} from 'react-router-native';
-import TopBar from './components/TopBar';
-import ListView from './components/ListView';
-import DetailView from './components/DetailView';
 import Loading from './components/Loading';
 import Initial2 from './components/Initial2';
 import Login from './components/Login';
 
-// const App = () => {
+const Stack = createStackNavigator();
 class App extends Component {
   state = {
     isLoading: true,
@@ -22,34 +20,24 @@ class App extends Component {
   render() {
     if (this.state.isLoading) {
       console.log('Loading..');
-      return <Loading />;
+      return (
+        <NavigationContainer>
+          <Loading />
+        </NavigationContainer>
+      );
     } else {
       console.log('load success');
       return (
-        <NativeRouter>
-          <ScrollView style={styles.container}>
-            {/* <TopBar /> */}
-            {/* <Route exact path="/" component={ListView} />
-              <Route path="/detail/:id" component={DetailView} /> */}
-            <Route exact path="/" component={Initial2} />
-            <Route path="/login" component={Login} />
-          </ScrollView>
-        </NativeRouter>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Initial2">
+            <Stack.Screen name="Initial2" component={Initial2} />
+            <Stack.Screen name="Login" component={Login} />
+          </Stack.Navigator>
+        </NavigationContainer>
       );
-      //   return <Initial />;
     }
   }
 }
-//   return (
-//     <NativeRouter>
-//       <ScrollView style={styles.container}>
-//         <TopBar />
-//         <Route exact path="/" component={ListView} />
-//         <Route path="/detail/:id" component={DetailView} />
-//       </ScrollView>
-//     </NativeRouter>
-//   );
-// };
 
 const styles = StyleSheet.create({
   container: {
