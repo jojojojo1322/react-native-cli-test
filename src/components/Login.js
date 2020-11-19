@@ -7,16 +7,13 @@ import {
   Button,
   Image,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 
 class Login extends Component {
   state = {
     ID: '',
     passWord: '',
-  };
-  handleBack = () => {
-    this.props.history.goBack();
   };
   handleID = (text) => {
     this.setState({
@@ -33,6 +30,7 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         {/* <Button title="back" onPress={this.handleBack}></Button> */}
+
         <Text style={styles.realresearch}>Real Research</Text>
         <Text style={styles.textalign}>
           Hello there,{'\n'}Login to your account
@@ -48,21 +46,29 @@ class Login extends Component {
           secureTextEntry={true}
           value={this.state.passWord}
           onChangeText={(text) => this.handlePassword(text)}></TextInput>
-          <TouchableOpacity style={styles.button} activeOpacity={0.75}>
-            <Text style={styles.buttonText}>LOGIN</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.fotgotPasswordBox} activeOpacity={0.75}>
-            <Text style={styles.fotgotPassword}>Forgot Password?</Text>
-          </TouchableOpacity>
-          <View style={styles.bottomText}>
-            <View style={styles.bottomButtonBox}>
-              <Text sytle={styles.buttonBoxInner}>Don't have an account? </Text>
-              <TouchableOpacity activeOpacity={0.75}>
-                <Text sytle={styles.buttonBoxInner}>Sign up here</Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.bottomTextInner}>POWERED BY REAL RESEARCH INC.</Text>
+        <TouchableOpacity style={styles.button} activeOpacity={0.75}>
+          <Text style={styles.buttonText}>LOGIN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.fotgotPasswordBox} activeOpacity={0.75}>
+          <Text style={styles.fotgotPassword}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <View style={styles.bottomText}>
+          <View style={styles.bottomButtonBox}>
+            <Text sytle={styles.buttonBoxInner}>Don't have an account? </Text>
+            <TouchableOpacity activeOpacity={0.75}>
+              <Text
+                sytle={styles.buttonBoxInner}
+                onPress={() => {
+                  this.props.navigation.navigate('Signup');
+                }}>
+                Sign up here
+              </Text>
+            </TouchableOpacity>
           </View>
+          <Text style={styles.bottomTextInner}>
+            POWERED BY REAL RESEARCH INC.
+          </Text>
+        </View>
       </View>
     );
   }
@@ -74,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     // justifyContent: 'center',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   realresearch: {
     marginTop: 50,
@@ -90,15 +96,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   textinput: {
-     width: '90%',
-     height: 56,
-     borderWidth: 1,
-     borderColor: '#164895',
-     borderRadius: 50,
-     paddingLeft: 31,
-     marginTop: 10,
-     fontSize: 16,
-     letterSpacing: 0.9
+    width: '90%',
+    height: 56,
+    borderWidth: 1,
+    borderColor: '#164895',
+    borderRadius: 50,
+    paddingLeft: 31,
+    marginTop: 10,
+    fontSize: 16,
+    letterSpacing: 0.9,
   },
   button: {
     width: '90%',
@@ -114,40 +120,39 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 56,
     fontWeight: '500',
-    letterSpacing: 0.9
+    letterSpacing: 0.9,
   },
   firstTextInput: {
-    marginTop: 50
+    marginTop: 50,
   },
   fotgotPasswordBox: {
     borderBottomWidth: 1,
     borderBottomColor: '#164895',
-    marginTop: 20
+    marginTop: 20,
   },
   fotgotPassword: {
     fontSize: 14,
     lineHeight: 20,
-    color: '#164895'
+    color: '#164895',
   },
   bottomText: {
-    width: '100%'
+    width: '100%',
   },
   bottomButtonBox: {
     marginTop: 85,
     flexDirection: 'row',
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
   buttonBoxInner: {
     fontSize: 13,
     color: '#49658f',
-    letterSpacing: 1
+    letterSpacing: 1,
   },
   bottomTextInner: {
     textAlign: 'right',
     fontSize: 12,
     color: '#49658f',
-    
-  }
+  },
   //   row: {
   //     alignItems: 'center',
   //     backgroundColor: 'white',

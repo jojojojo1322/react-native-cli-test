@@ -5,6 +5,7 @@ import {StyleSheet, ScrollView} from 'react-native';
 import Loading from './components/Loading';
 import Initial2 from './components/Initial2';
 import Login from './components/Login';
+import Signup from './components/Signup';
 
 const Stack = createStackNavigator();
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
           <Stack.Navigator initialRouteName="Initial2">
             <Stack.Screen name="Initial2" component={Initial2} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Signup" component={Signup} />
           </Stack.Navigator>
         </NavigationContainer>
       );

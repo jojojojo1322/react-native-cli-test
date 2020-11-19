@@ -57,15 +57,18 @@ class Initial2 extends Component {
               style={styles.scrollViewStyle}
               pagingEnabled
               showsHorizontalScrollIndicator={false}
-              onScroll={Animated.event([
-                {
-                  nativeEvent: {
-                    contentOffset: {
-                      x: this.scrollX,
+              onScroll={Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        x: this.scrollX,
+                      },
                     },
                   },
-                },
-              ])}
+                ],
+                {useNativeDriver: false},
+              )}
               scrollEventThrottle={1}>
               {images.map((image, imageIndex) => {
                 return (
@@ -123,7 +126,12 @@ class Initial2 extends Component {
         </SafeAreaView>
 
         <View style={styles.buttonBox}>
-          <TouchableOpacity style={styles.button} activeOpacity={0.75}>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.75}
+            onPress={() => {
+              this.props.navigation.navigate('Signup');
+            }}>
             <Text style={styles.buttonText}>SIGN UP</Text>
           </TouchableOpacity>
 
