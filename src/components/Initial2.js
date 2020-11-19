@@ -27,6 +27,9 @@ class Initial2 extends Component {
       window,
     },
   };
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  };
   handleBack = () => {
     this.props.history.goBack();
   };
