@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, Button} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, Button, TouchableHighlight} from 'react-native';
 // import CheckBox from '@react-native-community/checkbox';
 import CheckBox from 'react-native-check-box';
 
@@ -36,9 +36,9 @@ class ResearchForm extends Component {
   componentDidMount() {
     this.setState({
       question: [
-        {id: 0, question: '1-1번 설문조사 질문입니다.', answer: ''},
-        {id: 1, question: '1-2번 설문조사 질문입니다.', answer: ''},
-        {id: 2, question: '1-3번 설문조사 질문입니다.', answer: ''},
+        {id: 0, question: '설문조사 질문입니다. 이 질문에 대해서 어떻게 생각하시나요?', answer: ''},
+        {id: 1, question: '설문조사 질문입니다. 이 질문에 대해서 어떻게 생각하시나요?', answer: ''},
+        {id: 2, question: '설문조사 질문입니다. 이 질문에 대해서 어떻게 생각하시나요?', answer: ''},
       ],
       questionLength: 3,
     });
@@ -59,85 +59,209 @@ class ResearchForm extends Component {
     researchArr.map(
       (data, index) =>
         (researchList = researchList.concat(
-          <View key={index}>
-            <Text>{data.question}</Text>
-            <Text>매우 나쁨</Text>
-            {/* <CheckBox
-            disabled={false}
-            value={this.state.c1}
-            onValueChange={(value) => this.setState({c1: value})}
-          /> */}
-            <CheckBox
-              onClick={() => {
-                this.setState({
-                  isChecked: !this.state.isChecked,
-                  checkId: 1,
-                });
-              }}
-              isChecked={this.state.isChecked && this.state.checkId == 1}
-            />
-            <Text>적당히 나쁨</Text>
-            <CheckBox
-              onClick={() => {
-                this.setState({
-                  isChecked: !this.state.isChecked,
-                  checkId: 2,
-                });
-              }}
-              isChecked={this.state.isChecked && this.state.checkId == 2}
-            />
-            <Text>보통</Text>
-            <CheckBox
-              onClick={() => {
-                this.setState({
-                  isChecked: !this.state.isChecked,
-                  checkId: 3,
-                });
-              }}
-              isChecked={this.state.isChecked && this.state.checkId == 3}
-            />
-            <Text>적당히 좋음</Text>
-            <CheckBox
-              onClick={() => {
-                this.setState({
-                  isChecked: !this.state.isChecked,
-                  checkId: 4,
-                });
-              }}
-              isChecked={this.state.isChecked && this.state.checkId == 4}
-            />
-            <Text>매우 좋음</Text>
-            <CheckBox
-              onClick={() => {
-                this.setState({
-                  isChecked: !this.state.isChecked,
-                  checkId: 5,
-                });
-              }}
-              isChecked={this.state.isChecked && this.state.checkId == 5}
-            />
-          </View>,
+          <View
+            style={styles.container}
+            key={index}
+          >
+
+            <View style={styles.researchSubBox}>
+              <Text style={styles.researchSubNumber}>{data.id+1}/{this.state.questionLength}</Text>
+              <Text style={styles.researchSubText}>{data.question}</Text>
+            </View>
+            
+            <ScrollView>
+
+              <View style={styles.checkListFirst}>
+                <Text style={styles.checkListText}>매우 나쁨</Text>
+                <CheckBox
+                  onClick={() => {
+                    this.setState({
+                      isChecked: !this.state.isChecked,
+                      checkId: 1,
+                    });
+                  }}
+                  isChecked={this.state.isChecked && this.state.checkId == 1}
+                />
+              </View>
+                
+              <View style={styles.checkList}>
+                <Text style={styles.checkListText}>적당히 나쁨</Text>
+                <CheckBox
+                  onClick={() => {
+                    this.setState({
+                      isChecked: !this.state.isChecked,
+                      checkId: 2,
+                    });
+                  }}
+                  isChecked={this.state.isChecked && this.state.checkId == 2}
+                />
+              </View>
+                
+              <View style={styles.checkList}>
+                <Text style={styles.checkListText}>보통</Text>
+                <CheckBox
+                  onClick={() => {
+                    this.setState({
+                      isChecked: !this.state.isChecked,
+                      checkId: 3,
+                    });
+                  }}
+                  isChecked={this.state.isChecked && this.state.checkId == 3}
+                />
+              </View>
+                
+              <View style={styles.checkList}>
+                <Text style={styles.checkListText}>적당히 좋음</Text>
+                <CheckBox
+                  onClick={() => {
+                    this.setState({
+                      isChecked: !this.state.isChecked,
+                      checkId: 4,
+                    });
+                  }}
+                  isChecked={this.state.isChecked && this.state.checkId == 4}
+                />
+              </View>
+                
+              <View style={styles.checkList}>
+                <Text style={styles.checkListText}>매우 좋음</Text>
+                <CheckBox
+                  onClick={() => {
+                    this.setState({
+                      isChecked: !this.state.isChecked,
+                      checkId: 5,
+                    });
+                  }}
+                  isChecked={this.state.isChecked && this.state.checkId == 5}
+                />
+              </View>
+
+            </ScrollView>
+
+          </View>
+            
         )),
     );
     console.log('Length', this.state.questionLength);
     console.log('nowIndex', this.state.nowIndex);
     return (
-      <ScrollView>
-        <Text>설문조사 제목</Text>
+      <View style={styles.container}>
+
+        <Text style={styles.researchTitle}>설문조사 제목</Text>
+          
         {researchList[this.state.nowIndex]}
-        <Button
-          title={this.state.nowIndex == 0 ? '취소' : '이전'}
-          onPress={this.handlerPrev}></Button>
-        <Button
-          title={
+
+        <View style={styles.buttonBox}>
+          <TouchableHighlight
+            style={this.state.nowIndex == 0 ? styles.buttonCancel : styles.button}
+            activeOpacity={0.75}
+            onPress={this.handlerPrev}
+          >
+            <Text style={styles.buttonText}>{this.state.nowIndex == 0 ? '취소' : '이전'}</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            activeOpacity={0.75}
+            onPress={this.handlerNext}
+          >
+            <Text style={styles.buttonText}>{
             this.state.nowIndex == this.state.questionLength - 1
               ? '제출'
               : '다음'
-          }
-          onPress={this.handlerNext}></Button>
-      </ScrollView>
+          }</Text>
+          </TouchableHighlight>
+        </View>
+          
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFF',
+  },
+  researchTitle: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: '500',
+    marginTop: '10%'
+  },
+  researchSubBox: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingLeft: '5%',
+    paddingRight: '5%'
+  },
+  researchSubNumber: {
+    marginTop: 30,
+    fontSize: 27,
+    lineHeight: 36,
+    fontWeight: '500',
+    color: '#164895'
+  },
+  researchSubText: {
+    marginTop: 30,
+    fontSize: 16,
+    lineHeight: 25,
+    fontWeight: '500',
+    color: '#333',
+    marginBottom: 30
+  },
+  buttonBox: {
+    flexDirection: 'row',
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    justifyContent: 'space-between',
+    marginBottom: 20
+  },
+  button: {
+    width: '48%',
+    height: 56,
+    borderRadius: 30,
+    backgroundColor: '#164895',
+    color: '#FFF'
+  },
+  buttonCancel: {
+    width: '48%',
+    height: 56,
+    borderRadius: 30,
+    backgroundColor: '#c6c9cf',
+    color: '#FFF'
+  },
+  buttonText: {
+    color: '#FFF',
+    textAlign: 'center',
+    fontSize: 17,
+    lineHeight: 56,
+    fontWeight: '500',
+    letterSpacing: 0.9
+  },
+  checkList: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: '5%',
+    borderBottomWidth: 1,
+    borderColor: '#dddddd'
+  },
+  checkListFirst: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: '5%',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderColor: '#dddddd'
+  },
+  checkListText: {
+    fontSize: 15,
+    lineHeight: 24,
+    color: '#333'
+  }
+});
 
 export default ResearchForm;

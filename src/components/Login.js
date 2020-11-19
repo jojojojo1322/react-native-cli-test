@@ -9,21 +9,46 @@ import {
   Button,
   Image,
   TextInput,
+  FlatList,
+  SafeAreaView,
+  StatusBar,
   TouchableOpacity,
-  TouchableHighlight,
+  TouchableHighlight
 } from 'react-native';
+// import RNPickerSelect from 'react-native-picker-select';
+
+const DATA = [
+  {
+    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+    title: "First Item",
+  },
+  {
+    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+    title: "Second Item",
+  },
+  {
+    id: "58694a0f-3da1-471f-bd96-145571e29d72",
+    title: "Third Item",
+  },
+];
+
+const Item = ({ item, onPress, style }) => (
+  <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+    <Text style={styles.title}>{item.title}</Text>
+  </TouchableOpacity>
+);
 
 class Login extends Component {
+
   state = {
     ID: '',
     passWord: '',
-  };
-  state = {
     modalVisible: false,
+    selectedId: null
   };
 
   setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
+    this.setState({ modalVisible: visible });
   };
   handleBack = () => {
     this.props.history.goBack();
@@ -40,13 +65,42 @@ class Login extends Component {
   };
 
   render() {
-    const {modalVisible} = this.state;
+    const { modalVisible } = this.state;
+
+    const Select = () => {
+      // const [selectedId, setSelectedId] = useState(null);
+    
+      const renderItem = ({ item }) => {
+        const backgroundColor = item.id === this.state.selectedId ? "#dedede" : "#FFF";
+    
+        return (
+          <Item
+            item={item}
+            onPress={() => this.state.selectedId(item.id)}
+            style={{ backgroundColor }}
+          />
+        );
+      };
+    
+      return (
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            extraData={this.state.selectedId}
+          />
+        </SafeAreaView>
+      );
+    };
+
     return (
       <View style={styles.container}>
         {/* <Button title="back" onPress={this.handleBack}></Button> */}
-
         <Text style={styles.title}>Real Research</Text>
-        <Text style={styles.sub}>Hello there,{'\n'}Login to your account</Text>
+        <Text style={styles.sub}>
+          Hello there,{'\n'}Login to your account
+        </Text>
         <View style={styles.loginBox}>
           <TextInput
             style={[styles.loginInput]}
@@ -64,12 +118,19 @@ class Login extends Component {
             activeOpacity={0.75}
             onPress={() => {
               this.setModalVisible(true);
-            }}>
+            }}
+          >
             <Text style={styles.loginButtonText}>LOGIN</Text>
           </TouchableHighlight>
-          <TouchableOpacity
-            style={styles.fotgotPasswordBox}
-            activeOpacity={0.75}>
+          {/* <RNPickerSelect
+            onValueChange={(value) => console.log(value)}
+            items={[
+                { label: 'Football', value: 'football' },
+                { label: 'Baseball', value: 'baseball' },
+                { label: 'Hockey', value: 'hockey' },
+            ]}
+          /> */}
+          <TouchableOpacity style={styles.fotgotPasswordBox} activeOpacity={0.75}>
             <Text style={styles.fotgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
@@ -79,38 +140,71 @@ class Login extends Component {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
+            Alert.alert("Modal has been closed.");
+          }}
+        >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>
-                현재 지갑이 생성되어 있지 않습니다{'\n'}지갑을 만들어주세요
-              </Text>
+              <Text style={styles.modalText}>현재 지갑이 생성되어 있지 않습니다{"\n"}지갑을 만들어주세요</Text>
             </View>
             <TouchableHighlight
-              style={{...styles.closeButton, backgroundColor: '#164895'}}
-              onPress={() => {
-                this.setModalVisible(!modalVisible);
-              }}>
-              <Text style={styles.closeButtonText}>확인</Text>
-            </TouchableHighlight>
+                style={{ ...styles.closeButton, backgroundColor: "#164895" }}
+                onPress={() => {
+                  this.setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.closeButtonText}>확인</Text>
+              </TouchableHighlight>
           </View>
         </Modal>
 
-        <View style={styles.bottomTextBox}>
-          <View style={styles.bottomSignupBox}>
-            <Text style={styles.buttonBoxText}>Don't have an account? </Text>
-            <TouchableOpacity activeOpacity={0.75}>
-              <Text style={styles.buttonBoxSignupText}>Sign up here</Text>
-            </TouchableOpacity>
+        {/* <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text>국적선택</Text>
+              <TouchableHighlight
+                
+                onPress={() => {
+                  this.setModalVisible(!modalVisible);
+                }}
+              >
+              <Image
+                source={require('../imgs/icon_close.png')}
+              ></Image>
+            </TouchableHighlight>
+            <View>
+              <TextInput
+                placeholder="Search"
+                secureTextEntry={true}
+                value={this.state.passWord}
+                onChangeText={(text) => this.handlePassword(text)}>
+              </TextInput>
+              <Image
+                source={require('../imgs/icon_close.png')}
+              ></Image>
+            </View>
+            </View>
+            
+            <Select />
           </View>
-          <Text style={styles.bottomTextInner}>
-            POWERED BY REAL RESEARCH INC.
-          </Text>
-        </View>
-        <Text style={styles.bottomTextInner}>
-          POWERED BY REAL RESEARCH INC.
-        </Text>
+        </Modal> */}
+        
+          <View style={styles.bottomTextBox}>
+            <View style={styles.bottomSignupBox}>
+              <Text style={styles.buttonBoxText}>Don't have an account? </Text>
+              <TouchableOpacity activeOpacity={0.75}>
+                <Text style={styles.buttonBoxSignupText}>Sign up here</Text>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.bottomTextInner}>POWERED BY REAL RESEARCH INC.</Text>
+          </View>
       </View>
     );
   }
@@ -121,9 +215,8 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'column',
     alignItems: 'center',
-
     justifyContent: 'space-between',
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFF'
   },
   title: {
     marginTop: 100,
@@ -139,7 +232,7 @@ const styles = StyleSheet.create({
   },
   loginBox: {
     width: '100%',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   loginInput: {
     width: '90%',
@@ -150,7 +243,7 @@ const styles = StyleSheet.create({
     paddingLeft: 31,
     fontSize: 16,
     letterSpacing: 0.9,
-    marginBottom: 20,
+    marginBottom: 20
   },
   loginButton: {
     width: '90%',
@@ -158,7 +251,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: '#164895',
     color: '#FFF',
-    marginBottom: 20,
+    marginBottom: 20
   },
   loginButtonText: {
     color: '#FFF',
@@ -166,9 +259,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 56,
     fontWeight: '500',
-    letterSpacing: 0.9,
+    letterSpacing: 0.9
   },
-
   fotgotPasswordBox: {
     borderBottomWidth: 1,
     borderBottomColor: '#164895',
@@ -176,17 +268,17 @@ const styles = StyleSheet.create({
   fotgotPassword: {
     fontSize: 14,
     lineHeight: 20,
-    color: '#164895',
+    color: '#164895'
   },
   bottomTextBox: {
     width: '100%',
     marginBottom: 30,
-    padding: '5%',
+    padding: '5%'
   },
   bottomSignupBox: {
     marginTop: 100,
     flexDirection: 'row',
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-end'
   },
   buttonBoxText: {
     color: '#164895',
@@ -206,46 +298,46 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'hsla(0, 0%, 20%, 0.6)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: 'hsla(0, 0%, 20%, 0.6)'
   },
   modalView: {
     width: '90%',
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 5
   },
   modalText: {
     textAlign: 'center',
     fontSize: 16,
     lineHeight: 24,
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 20
   },
   closeButton: {
     width: '90%',
-    backgroundColor: '#F194FF',
+    backgroundColor: "#F194FF",
     elevation: 2,
     borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    borderBottomRightRadius: 5
   },
-  closeButtonText: {
+  closeButtonText : {
     color: '#FFF',
     fontWeight: '500',
     fontSize: 16,
     textAlign: 'center',
-    padding: 17,
-  },
+    padding: 17
+  }
 });
 export default Login;
