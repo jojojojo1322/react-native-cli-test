@@ -49,8 +49,8 @@ class Initial2 extends Component {
   render() {
     const windowWidth = this.state.dimensions.window.width;
     return (
-      <View style={styles.container2}>
-        <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <SafeAreaView>
           <View style={styles.scrollContainer}>
             <ScrollView
               horizontal={true}
@@ -143,24 +143,12 @@ class Initial2 extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
     flex: 1,
+    height: '100%',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 40,
-  },
-  container2: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-  },
-  imgBox: {
-    flex: 1,
-    flexDirection: 'column',
-    flexWrap: 'nowrap',
+    backgroundColor: '#FFF'
   },
   Image: {
     resizeMode: 'contain',
@@ -169,7 +157,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   scrollContainer: {
-    height: 400,
+    height: 350,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -225,7 +213,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17,
     lineHeight: 56,
-  },
+  }
 });
 
 export default Initial2;
