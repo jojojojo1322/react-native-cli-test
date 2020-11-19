@@ -27,6 +27,9 @@ class Initial2 extends Component {
       window,
     },
   };
+  setModalVisible = (visible) => {
+    this.setState({modalVisible: visible});
+  };
   handleBack = () => {
     this.props.history.goBack();
   };
@@ -143,6 +146,14 @@ class Initial2 extends Component {
             }}>
             <Text style={styles.buttonText}>LOGIN</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonLogin}
+            activeOpacity={0.75}
+            onPress={() => {
+              this.props.navigation.navigate('ResearchForm');
+            }}>
+            <Text style={styles.buttonText}>ResearchForm</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -156,7 +167,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   Image: {
     resizeMode: 'contain',
@@ -221,7 +232,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17,
     lineHeight: 56,
-  }
+  },
 });
 
 export default Initial2;

@@ -6,6 +6,7 @@ import Loading from './components/Loading';
 import Initial2 from './components/Initial2';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import ResearchForm from './components/research/ResearchForm';
 
 const Stack = createStackNavigator();
 class App extends Component {
@@ -34,6 +35,7 @@ class App extends Component {
             <Stack.Screen name="Initial2" component={Initial2} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Signup" component={Signup} />
+            <Stack.Screen name="ResearchForm" component={ResearchForm} />
           </Stack.Navigator>
         </NavigationContainer>
       );
