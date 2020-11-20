@@ -97,7 +97,14 @@ class RoundCheckbox extends Component {
 }
 
 class ResearchForm extends Component {
-  CheckedArrObject = new SelectedCheckboxes();
+
+  // CheckedArrObject = new SelectedCheckboxes();
+
+  constructor() {
+    super();
+    CheckedArrObject = new SelectedCheckboxes();
+    // this.state = { pickedElements: '' }
+  }
   state = {
     question: [],
     questionLength: 0,
@@ -106,12 +113,12 @@ class ResearchForm extends Component {
     nowIndex: 0,
     pickedElements: ''
   };
-
   // constructor() {
   //   super();
   //   CheckedArrObject = new SelectedCheckboxes();
   //   this.state = { pickedElements: '' }
   // }
+
 
   renderSelectedElements = () => {
     if (CheckedArrObject.fetchArray().length == 0) {
@@ -456,7 +463,7 @@ const styles = StyleSheet.create({
   checkList: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     padding: '5%',
     borderBottomWidth: 1,
     borderColor: '#dddddd'
