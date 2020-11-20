@@ -25,7 +25,7 @@ class SelectedCheckboxes {
   }
 }
 
-class Checkbox extends Component {
+class RoundCheckbox extends Component {
 
   constructor() {
     super();
@@ -77,7 +77,8 @@ class Checkbox extends Component {
           flexDirection: 'row', 
           alignItems: 'center' }}>
             <View style={{
-              padding: 2, 
+              padding: 1.5,
+              borderRadius: 50,
               width: this.props.size, 
               height: this.props.size, 
               backgroundColor: this.props.color
@@ -86,7 +87,7 @@ class Checkbox extends Component {
                 (this.state.checked)
                   ?
                   (<View style={styles.selectedUI}>
-                    <Image source={require('../imgs/icon_close.png')} style={styles.checkboxTickImg} />
+                    <Image source={require('../imgs/roundcheck.png')} style={styles.checkboxTickImg} />
                   </View>)
                   :
                   (<View style={styles.uncheckedCheckbox} />)
@@ -125,37 +126,37 @@ export default class Initial3 extends Component {
   render() {
     return (
       <View style={styles.CheckboxContainer}>
-        <Checkbox size={25}
+        <RoundCheckbox size={30}
           keyValue={1}
           checked={true}
-          color="#E81E63"
+          color="#164895"
           labelColor="#000000"
           label="Birds of Prey"
           value="birds_of_prey" 
           checkedObjArr={CheckedArrObject} />
 
-        <Checkbox size={25}
+        <RoundCheckbox size={30}
           keyValue={2}
           checked={false}
           color="#3F50B5"
-          labelColor="#000000"
+          labelColor="#164895"
           label="Little Women"
           value="little_women" 
           checkedObjArr={CheckedArrObject} />
 
-        <Checkbox size={25}
+        <RoundCheckbox size={30}
           keyValue={3}
           checked={true}
-          color="#009688"
+          color="#164895"
           labelColor="#000000"
           label="Doctor Sleep"
           value="doctor_sleep"
           checkedObjArr={CheckedArrObject} />
 
-        <Checkbox size={25}
+        <RoundCheckbox size={30}
           keyValue={4}
           checked={false}
-          color="#FF9800"
+          color="#164895"
           labelColor="#000000"
           label="Ford v Ferrari"
           value="ford_v_ferrari"
@@ -170,7 +171,7 @@ export default class Initial3 extends Component {
   }
 }
  
-Checkbox.propTypes = {
+RoundCheckbox.propTypes = {
     keyValue: PropTypes.number.isRequired,
     size: PropTypes.number,
     color: PropTypes.string,
@@ -181,12 +182,12 @@ Checkbox.propTypes = {
     checkedObjArr: PropTypes.object.isRequired
 }
 
-Checkbox.defaultProps = {
-    size: 32,
+RoundCheckbox.defaultProps = {
+    size: 30,
     checked: false,
     value: 'Default',
     label: 'Default',
-    color: '#cecece',
+    color: '#164895',
     labelColor: '000000',    
 }
 
@@ -221,18 +222,20 @@ const styles = StyleSheet.create(
     },
 
     checkboxTickImg: {
-      width: '85%',
-      height: '85%',
+      width: '75%',
+      height: '75%',
       tintColor: '#ffffff',
       resizeMode: 'contain'
     },
 
     uncheckedCheckbox: {
       flex: 1,
+      borderRadius: 50,
       backgroundColor: '#ffffff'
     },
 
     checkboxLabel: {
+      display: 'none',
       fontSize: 18,
       paddingLeft: 15
     }

@@ -44,7 +44,8 @@ class Login extends Component {
     ID: '',
     passWord: '',
     modalVisible: false,
-    selectedId: null
+    selectedId: null,
+    text: ''
   };
 
   setModalVisible = (visible) => {
@@ -63,6 +64,18 @@ class Login extends Component {
       passWord: text,
     });
   };
+  
+  // getInitialState() {
+  //   return {
+  //     color: 'white'
+  //   }
+  // };
+
+  // onBlur() {
+  //   this.setState({
+  //     backgroundColor: '#555'
+  //   })
+  // };
 
   render() {
     const { modalVisible } = this.state;
@@ -106,13 +119,22 @@ class Login extends Component {
             style={[styles.loginInput]}
             placeholder="Email Address"
             value={this.state.ID}
+            // onBlur={ () => this.onBlur() }
             onChangeText={(text) => this.handleID(text)}></TextInput>
           <TextInput
-            style={styles.loginInput}
+            style={[styles.loginInput]}
             placeholder="Password"
             secureTextEntry={true}
             value={this.state.passWord}
+            // onBlur={ () => this.onBlur() }
             onChangeText={(text) => this.handlePassword(text)}></TextInput>
+            <View style={styles.container}>
+         {/* <TextInput //use the color style to change the text color
+           style={{height: 40,backgroundColor: 'white',width:300,color: 'red'}}
+           onChangeText={(text) => this.setState({text})}
+           value={this.state.text}
+         /> */}
+       </View>
           <TouchableHighlight
             style={styles.loginButton}
             activeOpacity={0.75}
@@ -212,6 +234,7 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
     height: '100%',
     flexDirection: 'column',
     alignItems: 'center',
@@ -219,7 +242,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF'
   },
   title: {
-    marginTop: 100,
+    marginTop: '20%',
     textAlign: 'center',
     fontSize: 30,
     fontWeight: '500',
@@ -243,7 +266,8 @@ const styles = StyleSheet.create({
     paddingLeft: 31,
     fontSize: 16,
     letterSpacing: 0.9,
-    marginBottom: 20
+    marginBottom: '5%',
+    // color: '#999999'
   },
   loginButton: {
     width: '90%',
@@ -251,7 +275,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: '#164895',
     color: '#FFF',
-    marginBottom: 20
+    marginBottom: '5%'
   },
   loginButtonText: {
     color: '#FFF',
@@ -272,11 +296,11 @@ const styles = StyleSheet.create({
   },
   bottomTextBox: {
     width: '100%',
-    marginBottom: 30,
+    marginBottom: '8%',
     padding: '5%'
   },
   bottomSignupBox: {
-    marginTop: 100,
+    marginTop: '20%',
     flexDirection: 'row',
     alignSelf: 'flex-end'
   },
@@ -322,8 +346,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     lineHeight: 24,
-    marginTop: 20,
-    marginBottom: 20
+    marginTop: '5%',
+    marginBottom: '5%'
   },
   closeButton: {
     width: '90%',
