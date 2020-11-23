@@ -165,7 +165,12 @@ class Login extends Component {
             Alert.alert("Modal has been closed.");
           }}
         >
-          <View style={styles.centeredView}>
+          <View
+            style={styles.centeredView}
+            onPress={() => {
+              this.setModalVisible(!modalVisible);
+            }}
+          >
             <View style={styles.modalView}>
               <Text style={styles.modalText}>현재 지갑이 생성되어 있지 않습니다{"\n"}지갑을 만들어주세요</Text>
             </View>

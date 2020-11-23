@@ -113,6 +113,7 @@ class ResearchForm extends Component {
     nowIndex: 0,
     pickedElements: ''
   };
+  
   // constructor() {
   //   super();
   //   CheckedArrObject = new SelectedCheckboxes();

@@ -1,239 +1,267 @@
-import React, { Component } from 'react';
-import { 
-  Alert, 
-  Image, 
-  Platform, 
-  StyleSheet, 
-  Text, 
-  TouchableHighlight, 
-  View 
+import React, { useState, Component} from 'react';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  Alert,
+  Modal,
+  Button,
+  Image,
+  TextInput,
+  SafeAreaView,
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  FlatList,
+  StatusBar,
+  Linking,
+  Animated,
+  Dimensions,
 } from 'react-native';
-import PropTypes from 'prop-types';
 
+const window = Dimensions.get('window');
 
-class SelectedCheckboxes {
-  constructor() {
-    selectedCheckboxes = [];
-  }
+const DATA = [
+  {
+    id: "1",
+    title: "Afghanistan(AF)",
+    cd: '+93'
+  },
+  {
+    id: "2",
+    title: "Albania",
+    cd: '+355'
+  },
+  {
+    id: "3",
+    title: "Argentina",
+    cd: '+54'
+  },
+  {
+    id: "4",
+    title: "Angola",
+    cd: '+244'
+  },
+];
 
-  addItem(option) {
-    selectedCheckboxes.push(option);
-  }
+const CountryList = () => {
+  const [selectedId, setSelectedId] = useState(null);
 
-  fetchArray() {
-    return selectedCheckboxes;
-  }
-}
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.id === selectedId ? "#efefef" : "#FFF";
 
-class Checkbox extends Component {
+    return (
+      <Item
+        item={item}
+        onPress={() => setSelectedId(item.id)}
+        style={{ backgroundColor }}
+      />
+    );
+  };
 
-  constructor() {
-    super();
-    this.state = { 
-      checked: null 
-    }
-  }
+  return (
+    <View
+      style={styles.countryList}
+    >
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        extraData={selectedId}
+      />
+    </View>
+  );
+};
 
-  componentDidMount() {
-    if (this.props.checked) {
-      this.setState({ checked: true }, () => {
-        this.props.checkedObjArr.addItem({
-          'key': this.props.keyValue,
-          'value': this.props.value,
-          'label': this.props.label
-        });
-      });
-    } else {
-      this.setState({ 
-        checked: false
-      });
-    }
-  }
- 
-  stateSwitcher(key, label, value) {
-    this.setState({ checked: !this.state.checked }, () => {
-      if (this.state.checked) {
-        this.props.checkedObjArr.addItem({ 
-          'key': key,
-          'value': value,
-          'label': label
-        });
-      } else {
-        this.props.checkedObjArr.fetchArray().splice(
-          this.props.checkedObjArr.fetchArray().findIndex(y => y.key == key), 1
-        );
-      }
-    });
-  }
+const Item = ({ item, onPress, style }) => (
+  <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+    <Text style={styles.title}>{item.title}</Text>
+    <Text style={styles.cd}>{item.cd}</Text>
+  </TouchableOpacity>
+);
 
+class ModalCountry extends Component {
   render() {
     return (
-      <TouchableHighlight
-        onPress={this.stateSwitcher.bind(this, this.props.keyValue, this.props.label, this.props.value)} 
-        underlayColor="transparent"
-        style={{ marginVertical: 20 }}>
+      <>
+        <View style={styles.modalView}>
 
-        <View style={{ 
-          flexDirection: 'row', 
-          alignItems: 'center' }}>
-            <View style={{
-              padding: 2, 
-              width: this.props.size, 
-              height: this.props.size, 
-              backgroundColor: this.props.color
-            }}>
-              {
-                (this.state.checked)
-                  ?
-                  (<View style={styles.selectedUI}>
-                    <Image source={require('../imgs/icon_close.png')} style={styles.checkboxTickImg} />
-                  </View>)
-                  :
-                  (<View style={styles.uncheckedCheckbox} />)
-              }
+          <View style={styles.modalBox}>
+            <Text style={styles.modalText}>국적선택</Text>
+            <TouchableHighlight
+              style={styles.closeButton}
+              setModalVisible={this.setModalVisible}
+              modalVisible={this.props.modalVisible}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Image style={styles.closeButton} source={require('../imgs/icon_close.png')}/>
+            </TouchableHighlight>
           </View>
-          <Text style={[styles.checkboxLabel, { color: this.props.labelColor }]}>
-            {this.props.label}
-          </Text>
-        </View>
 
-      </TouchableHighlight>
+          <View style={styles.modalInputBox}>
+            <TextInput
+              style={styles.searchInputText}
+              placeholder="search"
+            ></TextInput>
+            <TouchableHighlight
+              style={styles.closeButton}
+            >
+              <Image  style={styles.closeButton} source={require('../imgs/icon_search.png')}/>
+            </TouchableHighlight>
+          </View>
+
+          <CountryList />
+
+        </View>
+      </>
     );
   }
 }
 
-export default class Initial3 extends Component {
- 
-  constructor() {
-    super();
-    CheckedArrObject = new SelectedCheckboxes();
-    this.state = { pickedElements: '' }
-  }
- 
-  renderSelectedElements = () => {
-    if (CheckedArrObject.fetchArray().length == 0) {
-      Alert.alert('No Item Selected');
-    } else {
-      this.setState(() => {
-        return {
-          pickedElements: CheckedArrObject.fetchArray().map(res => res.value).join()
-        }
-      });
-    }
-  }
+
+class Initial3 extends Component {
+
+  state = {
+    dimensions: {
+      window,
+    },
+    modalVisible: false,
+  };
+
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  };
 
   render() {
+    const { modalVisible } = this.state;
+    const windowWidth = this.state.dimensions.window.width;
     return (
-      <View style={styles.CheckboxContainer}>
-        <Checkbox size={25}
-          keyValue={1}
-          checked={true}
-          color="#E81E63"
-          labelColor="#000000"
-          label="Birds of Prey"
-          value="birds_of_prey" 
-          checkedObjArr={CheckedArrObject} />
+      <View style={styles.container}>
+          
+          <TouchableHighlight
+          activeOpacity={0.75}
+          onPress={() => {
+            this.setModalVisible(true);
+          }}
+          >
+            <Text>
+              button
+            </Text>
+          </TouchableHighlight>
 
-        <Checkbox size={25}
-          keyValue={2}
-          checked={false}
-          color="#3F50B5"
-          labelColor="#000000"
-          label="Little Women"
-          value="little_women" 
-          checkedObjArr={CheckedArrObject} />
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+            }}
+          >
 
-        <Checkbox size={25}
-          keyValue={3}
-          checked={true}
-          color="#009688"
-          labelColor="#000000"
-          label="Doctor Sleep"
-          value="doctor_sleep"
-          checkedObjArr={CheckedArrObject} />
+            <TouchableOpacity
+              style={styles.centeredView}
+              onPress={() => {
+                this.setModalVisible(!modalVisible);
+              }}
+            >
 
-        <Checkbox size={25}
-          keyValue={4}
-          checked={false}
-          color="#FF9800"
-          labelColor="#000000"
-          label="Ford v Ferrari"
-          value="ford_v_ferrari"
-          checkedObjArr={CheckedArrObject} />        
+              <ModalCountry data={this.state} setModalVisible={this.setModalVisible}></ModalCountry>
 
-        {/* <TouchableHighlight style={styles.showSelectedButton} onPress={this.renderSelectedElements}>
-          <Text style={styles.buttonText}>Checked Items</Text>
-        </TouchableHighlight> */}
-        {/* <Text style={{ fontSize: 22, color: "#000", marginTop: 25 }}> {this.state.pickedElements} </Text> */}
+            </TouchableOpacity>
+            
+          </Modal>
+
       </View>
     );
   }
 }
- 
-Checkbox.propTypes = {
-    keyValue: PropTypes.number.isRequired,
-    size: PropTypes.number,
-    color: PropTypes.string,
-    label: PropTypes.string,
-    value: PropTypes.string,
-    checked: PropTypes.bool,
-    labelColor: PropTypes.string,
-    checkedObjArr: PropTypes.object.isRequired
-}
 
-Checkbox.defaultProps = {
-    size: 32,
-    checked: false,
-    value: 'Default',
-    label: 'Default',
-    color: '#cecece',
-    labelColor: '000000',    
-}
-
-const styles = StyleSheet.create(
-  {
-    CheckboxContainer: {
-      flex: 1,
-      padding: 22,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingTop: (Platform.OS === 'ios') ? 25 : 0
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFF',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: 'hsla(0, 0%, 20%, 0.6)'
+  },
+  modalView: {
+    width: '90%',
+    backgroundColor: "white",
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
     },
-
-    // showSelectedButton: {
-    //   padding: 20,
-    //   marginTop: 25,
-    //   alignSelf: 'stretch',
-    //   backgroundColor: '#5D52FF'
-    // },
-
-    buttonText: {
-      fontSize: 20,
-      color: '#ffffff',
-      textAlign: 'center',
-      alignSelf: 'stretch'
-    },
-
-    selectedUI: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-
-    checkboxTickImg: {
-      width: '85%',
-      height: '85%',
-      tintColor: '#ffffff',
-      resizeMode: 'contain'
-    },
-
-    uncheckedCheckbox: {
-      flex: 1,
-      backgroundColor: '#ffffff'
-    },
-
-    checkboxLabel: {
-      fontSize: 18,
-      paddingLeft: 15
-    }
+    borderRadius: 5,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: 'hsla(0, 0%, 20%, 0.6)'
+  },
+  modalText: {
+    textAlign: 'center',
+    fontSize: 16,
+    lineHeight: 24,
+    marginTop: '5%',
+    marginBottom: '5%'
+  },
+  modalBox: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: "space-between"
+  },
+  modalInputBox : {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    padding: 15,
+    marginTop: 15
+  },
+  modalText: {
+    fontSize: 20,
+    lineHeight: 24,
+  },
+  closeButton: {
+    width: 20 ,
+    height: 20,
+  },
+  searchInputText: {
+    fontSize: 15
+  },
+  countryList: {
+    width: '100%',
+    flexDirection: 'column'
+  },
+  item: {
+    padding: 10,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  title: {
+    fontSize: 16,
+  },
 });
+
+export default Initial3;

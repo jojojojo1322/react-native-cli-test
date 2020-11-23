@@ -129,6 +129,7 @@ class Initial2 extends Component {
         </SafeAreaView>
 
         <View style={styles.buttonBox}>
+
           <TouchableOpacity
             style={styles.button}
             activeOpacity={0.75}
@@ -146,6 +147,7 @@ class Initial2 extends Component {
             }}>
             <Text style={styles.buttonText}>LOGIN</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.buttonLogin}
             activeOpacity={0.75}
@@ -154,6 +156,16 @@ class Initial2 extends Component {
             }}>
             <Text style={styles.buttonText}>ResearchForm</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.buttonLogin}
+            activeOpacity={0.75}
+            onPress={() => {
+              this.props.navigation.navigate('Initial3');
+            }}>
+            <Text style={styles.buttonText}>Test page</Text>
+          </TouchableOpacity>
+
         </View>
       </View>
     );
